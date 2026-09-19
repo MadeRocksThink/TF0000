@@ -1,0 +1,8 @@
+{
+  "provider": "claude",
+  "title": "Context portability",
+  "messages": [
+    { "role": "user", "body": "Preserve the source of every memory.", "ordinal": 0 },
+    { "role": "assistant", "body": "Use immutable versions and source links.", "ordinal": 1 }
+  ]
+}

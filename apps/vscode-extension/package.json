@@ -1,0 +1,229 @@
+{
+  "name": "tf0000-vscode",
+  "displayName": "TF0000 Context Memory",
+  "description": "Use the same local TF0000 project context in VS Code and GitHub Copilot.",
+  "version": "0.1.0",
+  "publisher": "tf0000",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MadeRocksThink/TF0000.git"
+  },
+  "private": true,
+  "engines": {
+    "vscode": "^1.95.0"
+  },
+  "categories": [
+    "AI",
+    "Other"
+  ],
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onView:tf0000.contextView",
+    "onLanguageModelTool:tf0000_getProjectContext",
+    "onLanguageModelTool:tf0000_searchDecisions",
+    "onLanguageModelTool:tf0000_saveMemoryCandidate"
+  ],
+  "scripts": {
+    "build": "node ../../scripts/clean-vscode-extension.mjs && tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit --pretty false",
+    "test": "vitest run",
+    "lint": "biome check src",
+    "package": "pnpm build && vsce package --no-dependencies --out ../../target/release/tf0000-vscode.vsix"
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "tf0000.refresh",
+        "title": "TF0000: Refresh Context"
+      },
+      {
+        "command": "tf0000.mapWorkspace",
+        "title": "TF0000: Map Workspace to Project"
+      },
+      {
+        "command": "tf0000.saveSelection",
+        "title": "TF0000: Save Selection as Context"
+      },
+      {
+        "command": "tf0000.saveFile",
+        "title": "TF0000: Save File as Context"
+      },
+      {
+        "command": "tf0000.getProjectContext",
+        "title": "TF0000: Open Project Context"
+      },
+      {
+        "command": "tf0000.searchDecisions",
+        "title": "TF0000: Search Project Decisions"
+      },
+      {
+        "command": "tf0000.reviewCandidates",
+        "title": "TF0000: Review Agent Write Candidates"
+      },
+      {
+        "command": "tf0000.configureNativeHost",
+        "title": "TF0000: Configure Native Host Path"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "tf0000",
+          "title": "TF0000",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "tf0000": [
+        {
+          "id": "tf0000.contextView",
+          "name": "Context Memory"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "tf0000.contextView",
+        "contents": "Map this workspace to a TF0000 project to begin.\n[Map Workspace](command:tf0000.mapWorkspace)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "tf0000.refresh",
+          "when": "view == tf0000.contextView",
+          "group": "navigation"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "tf0000.saveSelection",
+          "when": "editorHasSelection",
+          "group": "navigation@20"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "tf0000.saveFile",
+          "when": "resourceScheme == file",
+          "group": "navigation@20"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "TF0000",
+      "properties": {
+        "tf0000.nativeHostPath": {
+          "type": "string",
+          "default": "",
+          "scope": "machine",
+          "description": "Absolute path to tf0000-native-host. Leave empty to use the bundled host or PATH."
+        },
+        "tf0000.projectContextMaximumCharacters": {
+          "type": "number",
+          "default": 24000,
+          "minimum": 1000,
+          "maximum": 200000,
+          "scope": "window",
+          "description": "Maximum characters returned by the project-context command and language model tool."
+        }
+      }
+    },
+    "languageModelTools": [
+      {
+        "name": "tf0000_getProjectContext",
+        "displayName": "Get TF0000 Project Context",
+        "userDescription": "Read confirmed project memories and saved code references.",
+        "modelDescription": "Returns source-grounded context from the TF0000 project mapped to the current VS Code workspace. Use it when project decisions, requirements, or saved code references would help. It is read-only and does not access the Copilot transcript.",
+        "canBeReferencedInPrompt": true,
+        "toolReferenceName": "tf0000ProjectContext",
+        "icon": "$(database)",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "maximumCharacters": {
+              "type": "number",
+              "minimum": 1000,
+              "maximum": 200000,
+              "description": "Optional maximum number of context characters to return."
+            }
+          }
+        }
+      },
+      {
+        "name": "tf0000_searchDecisions",
+        "displayName": "Search TF0000 Decisions",
+        "userDescription": "Search current confirmed project decisions.",
+        "modelDescription": "Searches active decision memories in the TF0000 project mapped to the current workspace. Use it for architecture and implementation choices. It is read-only and returns recorded evidence, not a generated answer.",
+        "canBeReferencedInPrompt": true,
+        "toolReferenceName": "tf0000Decisions",
+        "icon": "$(search)",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "query": {
+              "type": "string",
+              "description": "Words describing the project decision to retrieve."
+            },
+            "limit": {
+              "type": "number",
+              "minimum": 1,
+              "maximum": 50,
+              "default": 10
+            }
+          },
+          "required": [
+            "query"
+          ]
+        }
+      },
+      {
+        "name": "tf0000_saveMemoryCandidate",
+        "displayName": "Propose TF0000 Memory",
+        "userDescription": "Create a pending memory candidate for human review.",
+        "modelDescription": "Creates a pending TF0000 memory candidate for the mapped project. Use only when the user asks to remember a durable decision, requirement, fact, task, or suggestion. This never writes directly to memory: the user must separately review and confirm it.",
+        "canBeReferencedInPrompt": true,
+        "toolReferenceName": "tf0000Remember",
+        "icon": "$(edit)",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "memoryType": {
+              "type": "string",
+              "enum": [
+                "decision",
+                "requirement",
+                "fact",
+                "suggestion",
+                "task",
+                "reference"
+              ]
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 160
+            },
+            "content": {
+              "type": "string",
+              "maxLength": 1000000
+            }
+          },
+          "required": [
+            "memoryType",
+            "title",
+            "content"
+          ]
+        }
+      }
+    ]
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/vscode": "^1.95.0",
+    "@vscode/vsce": "^3.6.0",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  }
+}

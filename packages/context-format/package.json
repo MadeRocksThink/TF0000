@@ -1,0 +1,21 @@
+{
+  "name": "@tf0000/context-format",
+  "version": "1.0.0",
+  "description": "Portable TF0000 project and Context Pack format",
+  "license": "MIT",
+  "files": [
+    "src",
+    "schema",
+    "README.md"
+  ],
+  "type": "module",
+  "exports": "./src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "lint": "biome check src"
+  },
+  "devDependencies": {
+    "vitest": "^3.2.4"
+  }
+}

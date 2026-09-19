@@ -1,0 +1,93 @@
+# Dependencies and package-manager state
+node_modules/
+.pnpm-store/
+.npm/
+.yarn/
+.pnp.*
+
+# JavaScript and TypeScript build output
+dist/
+.output/
+.wxt/
+.turbo/
+coverage/
+.nyc_output/
+*.tsbuildinfo
+*.tgz
+
+# Rust and Tauri build output
+target/
+apps/desktop/src-tauri/gen/
+
+# Packaged integration artifacts
+apps/vscode-extension/bin/
+apps/mcp-server/bin/
+*.vsix
+*.crx
+web-ext-artifacts/
+
+# Runtime data and local databases
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+*.sqlite-shm
+*.sqlite-wal
+*.sqlite3-shm
+*.sqlite3-wal
+*.db-journal
+*.sqlite-journal
+*.sqlite3-journal
+*.tf0000sync
+
+# Environment files, credentials, and signing material
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.cer
+*.crt
+
+# Logs, diagnostics, temporary files, and test output
+*.log
+logs/
+tmp/
+temp/
+.cache/
+.eslintcache
+playwright-report/
+test-results/
+blob-report/
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+
+# Local editor and IDE settings
+.idea/
+.vscode/
+*.code-workspace
+
+# Operating-system metadata
+.DS_Store
+._*
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Local AI-agent and tool state
+.codex/
+.claude/
+.cursor/
+
+# Internal review artifacts are kept outside the public source tree
+/docs/qa/
+/scripts/qa-*
+/crates/context-core/examples/qa_bridge.rs
+/cross_ai_context_memory_roadmap.html

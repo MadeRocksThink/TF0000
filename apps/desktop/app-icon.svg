@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <title>TF0000</title>
+  <defs>
+    <linearGradient id="bg" x1="64" y1="32" x2="448" y2="480" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#243b73"/>
+      <stop offset="1" stop-color="#0b1020"/>
+    </linearGradient>
+    <linearGradient id="mark" x1="144" y1="124" x2="374" y2="388" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#9db7ff"/>
+      <stop offset="1" stop-color="#73e3be"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <path d="M142 164c0-24 20-44 44-44h140c24 0 44 20 44 44v90c0 24-20 44-44 44H230l-66 70v-70c-13-7-22-21-22-38v-96Z" fill="none" stroke="url(#mark)" stroke-width="32" stroke-linejoin="round"/>
+  <circle cx="211" cy="209" r="15" fill="#9db7ff"/>
+  <circle cx="256" cy="209" r="15" fill="#8fcbdc"/>
+  <circle cx="301" cy="209" r="15" fill="#73e3be"/>
+</svg>

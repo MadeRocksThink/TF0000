@@ -1,0 +1,186 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tf0000.local/schema/project-v1.json",
+  "title": "TF0000 portable project",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "format",
+    "schemaVersion",
+    "exportedAt",
+    "sourceDeviceId",
+    "projects",
+    "memorySpaces",
+    "memories",
+    "contextPacks"
+  ],
+  "properties": {
+    "format": { "const": "tf0000-project/v1" },
+    "schemaVersion": { "const": 1 },
+    "exportedAt": { "type": "string", "minLength": 1, "maxLength": 64 },
+    "sourceDeviceId": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "projects": { "type": "array", "maxItems": 10000, "items": { "$ref": "#/$defs/project" } },
+    "memorySpaces": { "type": "array", "maxItems": 50000, "items": { "$ref": "#/$defs/space" } },
+    "memories": {
+      "type": "array",
+      "maxItems": 100000,
+      "items": { "$ref": "#/$defs/memoryRecord" }
+    },
+    "contextPacks": {
+      "type": "array",
+      "maxItems": 50000,
+      "items": { "$ref": "#/$defs/packRecord" }
+    }
+  },
+  "$defs": {
+    "nullableId": { "type": ["string", "null"] },
+    "project": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "description", "createdAt", "archivedAt"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string", "minLength": 1, "maxLength": 160 },
+        "description": { "type": "string", "maxLength": 10000 },
+        "createdAt": { "type": "string" },
+        "archivedAt": { "type": ["string", "null"] }
+      }
+    },
+    "space": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "projectId",
+        "parentId",
+        "name",
+        "description",
+        "defaultScope",
+        "createdAt",
+        "archivedAt"
+      ],
+      "properties": {
+        "id": { "type": "string" },
+        "projectId": { "$ref": "#/$defs/nullableId" },
+        "parentId": { "$ref": "#/$defs/nullableId" },
+        "name": { "type": "string", "minLength": 1, "maxLength": 160 },
+        "description": { "type": "string", "maxLength": 10000 },
+        "defaultScope": { "enum": ["global", "project", "conversation", "task"] },
+        "createdAt": { "type": "string" },
+        "archivedAt": { "type": ["string", "null"] }
+      }
+    },
+    "version": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "memoryId", "content", "changeType", "createdAt", "supersedesVersionId"],
+      "properties": {
+        "id": { "type": "string" },
+        "memoryId": { "type": "string" },
+        "content": { "type": "string", "minLength": 1, "maxLength": 1000000 },
+        "changeType": { "enum": ["create", "add", "merge", "replace", "supersede", "restore"] },
+        "createdAt": { "type": "string" },
+        "supersedesVersionId": { "$ref": "#/$defs/nullableId" }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "memoryVersionId",
+        "sourceType",
+        "sourceId",
+        "sourceHash",
+        "sourceLabel",
+        "sourceExcerpt"
+      ],
+      "properties": {
+        "memoryVersionId": { "type": "string" },
+        "sourceType": { "type": "string", "minLength": 1, "maxLength": 64 },
+        "sourceId": { "type": "string", "minLength": 1, "maxLength": 500 },
+        "sourceHash": { "type": "string", "minLength": 1, "maxLength": 256 },
+        "sourceLabel": { "type": "string", "maxLength": 1000 },
+        "sourceExcerpt": { "type": "string", "maxLength": 10000 }
+      }
+    },
+    "memoryRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["memory", "versions", "sources", "memorySpaceIds"],
+      "properties": {
+        "memory": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "projectId",
+            "memoryType",
+            "authority",
+            "status",
+            "title",
+            "currentVersionId",
+            "currentContent",
+            "createdAt"
+          ],
+          "properties": {
+            "id": { "type": "string" },
+            "projectId": { "$ref": "#/$defs/nullableId" },
+            "memoryType": { "type": "string" },
+            "authority": { "type": "string" },
+            "status": { "type": "string" },
+            "title": { "type": "string", "minLength": 1, "maxLength": 160 },
+            "currentVersionId": { "type": "string" },
+            "currentContent": { "type": "string", "minLength": 1, "maxLength": 1000000 },
+            "createdAt": { "type": "string" }
+          }
+        },
+        "versions": { "type": "array", "maxItems": 100000, "items": { "$ref": "#/$defs/version" } },
+        "sources": { "type": "array", "maxItems": 100000, "items": { "$ref": "#/$defs/source" } },
+        "memorySpaceIds": { "type": "array", "uniqueItems": true, "items": { "type": "string" } }
+      }
+    },
+    "packRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pack", "items"],
+      "properties": {
+        "pack": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "projectId",
+            "name",
+            "description",
+            "currentVersion",
+            "createdAt",
+            "updatedAt"
+          ],
+          "properties": {
+            "id": { "type": "string" },
+            "projectId": { "$ref": "#/$defs/nullableId" },
+            "name": { "type": "string", "minLength": 1, "maxLength": 160 },
+            "description": { "type": "string", "maxLength": 10000 },
+            "currentVersion": { "type": "integer", "minimum": 1 },
+            "createdAt": { "type": "string" },
+            "updatedAt": { "type": "string" }
+          }
+        },
+        "items": {
+          "type": "array",
+          "maxItems": 100000,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["targetId", "ordering", "inclusionMode"],
+            "properties": {
+              "targetId": { "type": "string" },
+              "ordering": { "type": "integer", "minimum": 0 },
+              "inclusionMode": { "enum": ["full", "summary", "reference"] }
+            }
+          }
+        }
+      }
+    }
+  }
+}

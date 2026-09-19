@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Cross-provider handoff | Gemini</title>
+  </head>
+  <body>
+    <main>
+      <user-query data-message-id="gemini-user-1">
+        <div class="query-text">Use the context captured in Claude.</div>
+      </user-query>
+      <model-response data-message-id="gemini-model-1">
+        <div class="model-response-text">The source link remains attached.</div>
+      </model-response>
+    </main>
+    <rich-textarea>
+      <div class="ql-editor" contenteditable="true"></div>
+    </rich-textarea>
+    <button data-test-id="send-button" type="button">Send</button>
+  </body>
+</html>

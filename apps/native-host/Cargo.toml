@@ -1,0 +1,14 @@
+[package]
+name = "tf0000-native-host"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+context-core = { path = "../../crates/context-core" }
+serde.workspace = true
+serde_json.workspace = true
+uuid.workspace = true
+
+[dev-dependencies]
+tempfile = "3"

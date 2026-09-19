@@ -1,0 +1,20 @@
+{
+  "name": "@tf0000/test-fixtures",
+  "version": "1.0.0",
+  "description": "Provider-neutral adapter fixtures for TF0000",
+  "license": "MIT",
+  "type": "module",
+  "exports": "./src/index.ts",
+  "files": [
+    "src",
+    "fixtures"
+  ],
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "lint": "biome check ."
+  },
+  "devDependencies": {
+    "vitest": "^3.2.4"
+  }
+}

@@ -1,0 +1,5 @@
+src/**
+**/*.map
+tsconfig*.json
+bin/*.pdb
+node_modules/**

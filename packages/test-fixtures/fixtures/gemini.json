@@ -1,0 +1,8 @@
+{
+  "provider": "gemini",
+  "title": "Temporary context",
+  "messages": [
+    { "role": "user", "body": "Attach this for two prompts only.", "ordinal": 0 },
+    { "role": "assistant", "body": "Track a remaining prompt counter.", "ordinal": 1 }
+  ]
+}

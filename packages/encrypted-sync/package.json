@@ -1,0 +1,23 @@
+{
+  "name": "@tf0000/encrypted-sync",
+  "version": "1.0.0",
+  "description": "Optional end-to-end encrypted selective sync for TF0000",
+  "license": "MIT",
+  "type": "module",
+  "exports": "./src/index.ts",
+  "files": [
+    "src",
+    "README.md"
+  ],
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "lint": "biome check src"
+  },
+  "dependencies": {
+    "@tf0000/context-format": "workspace:*"
+  },
+  "devDependencies": {
+    "vitest": "^3.2.4"
+  }
+}

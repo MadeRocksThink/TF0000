@@ -1,0 +1,35 @@
+{
+  "name": "tf0000",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@11.19.0",
+  "scripts": {
+    "dev": "pnpm --filter @tf0000/desktop tauri dev",
+    "build": "pnpm --filter @tf0000/desktop tauri build",
+    "build:web": "pnpm --filter @tf0000/desktop build",
+    "build:extension": "pnpm --filter @tf0000/browser-extension build",
+    "build:native-host": "cargo build --release -p tf0000-native-host",
+    "build:phase2": "pnpm build:extension && pnpm build:native-host",
+    "build:phase3": "pnpm build:extension && pnpm build:native-host",
+    "build:phase4": "pnpm build:extension && pnpm build:native-host && pnpm build",
+    "build:phase5": "pnpm build:extension && pnpm build:native-host && pnpm build",
+    "build:phase6": "pnpm build:extension && pnpm build:native-host && pnpm build",
+    "build:phase7": "pnpm build:extension && pnpm build:native-host && pnpm build",
+    "build:phase8": "pnpm build:extension && pnpm build:native-host && pnpm build",
+    "build:phase9": "pnpm build:extension && pnpm build:native-host && pnpm build",
+    "build:vscode": "cargo build --release -p tf0000-native-host && node scripts/prepare-vscode-extension.mjs && pnpm --filter tf0000-vscode package",
+    "build:phase10": "pnpm build:extension && pnpm build:vscode && pnpm build",
+    "build:mcp": "cargo build --release -p tf0000-native-host && node scripts/prepare-mcp-server.mjs && pnpm --filter @tf0000/mcp-server build && pnpm --filter @tf0000/mcp-server smoke && node scripts/package-mcp-server.mjs",
+    "build:phase11": "pnpm build:extension && pnpm build:vscode && pnpm build:mcp && pnpm build",
+    "build:phase12": "pnpm build:extension && pnpm build:vscode && pnpm build:mcp && pnpm build",
+    "test:phase12": "pnpm --filter @tf0000/adapter-sdk test && pnpm --filter @tf0000/test-fixtures test && pnpm --filter @tf0000/context-format test && pnpm --filter @tf0000/encrypted-sync test && pnpm --filter @tf0000/browser-extension test && cargo test -p context-core phase_twelve",
+    "typecheck": "pnpm -r typecheck",
+    "test": "pnpm -r test && cargo test --workspace",
+    "lint": "biome check . && cargo fmt --all -- --check && cargo clippy --workspace --all-targets -- -D warnings",
+    "format": "biome check --write . && cargo fmt --all"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.2.4",
+    "typescript": "^5.9.2"
+  }
+}

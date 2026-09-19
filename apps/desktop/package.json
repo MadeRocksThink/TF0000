@@ -1,0 +1,32 @@
+{
+  "name": "@tf0000/desktop",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev:web": "vite",
+    "build:web": "tsc -b && vite build",
+    "build": "pnpm build:web",
+    "typecheck": "tsc -b --pretty false",
+    "test": "vitest run --passWithNoTests",
+    "lint": "biome check src",
+    "tauri": "tauri"
+  },
+  "dependencies": {
+    "@tf0000/context-format": "workspace:*",
+    "@tf0000/domain": "workspace:*",
+    "@tf0000/encrypted-sync": "workspace:*",
+    "@tauri-apps/api": "^2.8.0",
+    "@tauri-apps/plugin-dialog": "^2.4.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.8.4",
+    "@types/react": "^19.1.12",
+    "@types/react-dom": "^19.1.9",
+    "@vitejs/plugin-react": "^5.0.2",
+    "vite": "^7.1.4",
+    "vitest": "^3.2.4"
+  }
+}

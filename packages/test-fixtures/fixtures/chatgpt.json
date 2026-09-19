@@ -1,0 +1,8 @@
+{
+  "provider": "chatgpt",
+  "title": "Database choice",
+  "messages": [
+    { "role": "user", "body": "Which local database should we use?", "ordinal": 0 },
+    { "role": "assistant", "body": "SQLite is a strong local-first choice.", "ordinal": 1 }
+  ]
+}
